@@ -6,6 +6,11 @@ function App() {
   const[colour, setColour]=useState("");
   const[answers,setAnswers]=useState<string[]>([]);
   const[isIncorrect,setIncorrect]= useState(false);
+  const pickNewColour=()=>{
+    const correctColour= getRandomColour();
+    setAnswers([correctColour,getRandomColour(),getRandomColour()].sort(()=>0.5-Math.random()));
+    setColour(correctColour);
+  }
 
   const getRandomColour=()=>{
 
@@ -21,14 +26,13 @@ function App() {
   }
 
   useEffect(() => {
-    const correctColour= getRandomColour();
-    setAnswers([correctColour,getRandomColour(),getRandomColour()].sort(()=>0.5-Math.random()));
-    setColour(correctColour);
+    pickNewColour();
   }, [])
 
   function handleClick(answer:string){
     if(answer==colour){
       setIncorrect(false);
+      pickNewColour();
     }
     else{
       setIncorrect(true);
@@ -36,9 +40,11 @@ function App() {
     
   }
   return (
+    
     <div className="App">
       <div className="column">
-        {isIncorrect && <div>Wrong Answer</div>}
+ {/*<div className = "count">Streak:(count)</div>*/}
+        {isIncorrect && <div className="wrong">Wrong Answer</div>}
         <div className="colour-picker" style={{background: colour}}></div>
           {answers.map((answers)=>(
           <button

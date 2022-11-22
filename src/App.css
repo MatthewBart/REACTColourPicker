@@ -19,3 +19,9 @@ button{
 button+button{
   margin-left:34px;
 }
+
+.wrong{
+  font-size:24px;
+  color:black;
+  margin-left:75px;
+}
