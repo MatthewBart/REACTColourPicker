@@ -7,7 +7,8 @@ function App() {
   // Define constants and set functions
   const[colour, setColour]=useState("");
   const[answers,setAnswers]=useState<string[]>([]);
-  const[isCorrect, setCorrect]=useState("");
+  const[isCorrect, setCorrect]=useState<Boolean | undefined>(undefined);
+
   
 
   // Picks a new colour and sets two random colours to be used as other guesses
@@ -40,11 +41,15 @@ function App() {
   // Determines if the answer is correct and changes colour if it is
   function handleClick(answer:string){
     if(answer==colour){
-      setCorrect("true");
+      setCorrect(true);
       pickNewColour();
+      setTimeout(()=>{
+      setCorrect(undefined);
+      },500);
+      
     }
     else{
-      setCorrect("false");
+      setCorrect(false);
     }
   }
     
@@ -54,8 +59,8 @@ function App() {
   return (
     <div className="App">
       <div className="column">
-        {isCorrect=="false"&& <div className="wrong">Wrong Answer</div>}
-        {isCorrect=="true"&& <div className="right">Correct Answer</div>}
+        {isCorrect==false&& <div className="wrong">Wrong Answer</div>}
+        {isCorrect==true&& <div className="right">Correct Answer</div>}
         <div className="colour-picker" style={{background: colour}}></div>
           {answers.map((answers)=>(
           <button
